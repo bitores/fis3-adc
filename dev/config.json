@@ -1,0 +1,32 @@
+{
+	"rev":"dist/rev",
+	"img":"dev/images",
+	"libcss":[
+	],
+	"libjs":[
+		"dev/js/common/libs/zepto.min.js"
+	],
+	"css":[
+		"dev/css/common/base.css",
+
+
+		"dev/css/demo1/demo1.css"
+	],
+	"js":[
+		"dev/js/common/common.js",
+		"dev/js/common/ajax.js",
+		"dev/js/common/Toast.js",
+
+
+		"dev/js/demo1/demo1.js"
+	],
+	"html":[
+
+		"dev/html/demo1/index.html",
+		"dev/html/demo1/dem.html"
+	],
+
+	"name": "demo1",
+
+	"version": "v=2016-22-34"
+}
