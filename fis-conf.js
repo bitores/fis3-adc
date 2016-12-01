@@ -36,6 +36,11 @@ fis.set('dev_path', '/dev');
 fis.set('dist_path', '/dist');
 fis.set('pro_name', config.name);
 
+// 开启相对地址
+// npm install [-g] fis3-hook-relative 
+fis.hook('relative'); 
+fis.match('**', { relative: true })
+
 // Global start
 //合并打包需加
 fis.match('::package', {
@@ -43,7 +48,7 @@ fis.match('::package', {
     // resourceType: 'mod',
     // obtainScript: false,
     // allInOne: true,
-    useInlineMap: true,
+    // useInlineMap: true,
     // useHash: true
   })
 });
