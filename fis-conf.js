@@ -47,7 +47,7 @@ fis.match('::package', {
   postpackager: fis.plugin('loader',{
     // resourceType: 'mod',
     obtainScript: true, //是否收集 <script> 内容
-    obtainStyle: true, // 是否收集 <style> 内容
+    obtainStyle: true, // 是否收集 <style> 和 <link>内容
     allInOne: {// 默认 false, 配置是否合并零碎资源
 
       // '${dist_path}/${pro_name}/css/all.css'

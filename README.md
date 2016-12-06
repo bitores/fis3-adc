@@ -3,12 +3,12 @@
 
 ####使用方法
 
-  注意：支持 node 4.x 6.x
-  error:  fis.require.paths is not end with `node_modules`, and it will be skipped.
 
-  >fis3-adc
-  >npm install
-  >fis3 release dev -d .
+>fis3-adc
+
+>npm install
+
+>fis3 release dev -d .
 
 #### 功能描述
 
