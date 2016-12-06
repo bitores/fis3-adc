@@ -10,6 +10,7 @@
 
 >fis3 release dev -d .
 
+
 #### 功能描述
 
 1、可配置
@@ -58,8 +59,24 @@
 
 > 开启将零散资源进行自动打包
   
-  eg. fis-postpackager-simple
-  fis.config.set('settings.postpackager.simple.autoCombine', true);
+  注： 使用时注意： html 内 script | style 
+  eg. fis3-postpackager-loader   
+
+  {
+    obtainScript: true, //是否收集 <script> 内容
+    obtainStyle: true, // 是否收集 <style> 和 <link>内容
+    allInOne: {// 默认 false, 配置是否合并零碎资源
+
+        js: function(file) {
+          return 'dist/'+config.name+'/js/all.js';
+        },
+        css: function(file) {
+          return 'dist/'+config.name+'/css/all.css';
+        },
+        includeAsyncs: true
+      }
+    })
+  }
 
 
 
