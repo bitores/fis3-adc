@@ -8,7 +8,9 @@
 
 >npm install
 
->fis3 release dev -d .
+>fis3 release dev -d . 编译
+
+>fis3 release -wL 监听
 
 
 #### 功能描述
@@ -59,7 +61,7 @@
 
 > 开启将零散资源进行自动打包
   
-  注： 使用时注意： html 内 script | style 
+  注： 使用时注意： html 内 script | style 最后一个
   eg. fis3-postpackager-loader   
 
   {
