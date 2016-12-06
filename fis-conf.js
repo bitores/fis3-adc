@@ -46,8 +46,19 @@ fis.match('**', { relative: true })
 fis.match('::package', {
   postpackager: fis.plugin('loader',{
     // resourceType: 'mod',
-    // obtainScript: false,
-    // allInOne: true,
+    obtainScript: true, //是否收集 <script> 内容
+    obtainStyle: true, // 是否收集 <style> 内容
+    allInOne: {// 默认 false, 配置是否合并零碎资源
+
+      // '${dist_path}/${pro_name}/css/all.css'
+
+      js: function(file) {
+        return 'dist/'+config.name+'/js/all.js';
+      },
+      css: function(file) {
+        return 'dist/'+config.name+'/css/all.css';
+      }
+    }, 
     // useInlineMap: true,
     // useHash: true
   })
@@ -81,10 +92,14 @@ fis.match('${dev_path}/css/common/libs/{**/(*.css),(*.css)}', {
   release:'${dist_path}/css/common/$1'
 });
 
-fis.match('${dev_path}/css/{common/*.css,${pro_name}/*.css}', {
-  release:true,
-  useHash: true,
-  packTo: '${dist_path}/${pro_name}/css/all.css',
+// fis.match('${dev_path}/css/{common/*.css,${pro_name}/*.css}', {
+//   // release:true,
+//   // useHash: true,
+//   // packTo: '${dist_path}/${pro_name}/css/all.css',
+//   optimizer: fis.plugin('clean-css') // js 压缩
+// });
+fis.match('${dist_path}/${pro_name}/css/all.css', {
+  // release:'${dist_path}/${pro_name}/css/all.css',
   optimizer: fis.plugin('clean-css') // js 压缩
 });
 
@@ -92,13 +107,15 @@ fis.match('${dev_path}/js/common/libs/{**/(*.js),(*.js)}', {
   release:'${dist_path}/js/common/$1',
 });
 
-fis.match('${dev_path}/js/common/*.js', {
-  release:true,
-  useHash: true,
-  packTo: '${dist_path}/${pro_name}/js/all.js',
+// fis.match('${dev_path}/js/common/*.js', {
+//   // release:true,
+//   // useHash: true,
+//   // packTo: '${dist_path}/${pro_name}/js/all.js',
+//   optimizer: fis.plugin('uglify-js') // js 压缩
+// });
+fis.match('${dist_path}/${pro_name}/js/all.js', {
   optimizer: fis.plugin('uglify-js') // js 压缩
 });
-
 
 
 // Global end

@@ -1,6 +1,15 @@
 # fis3-adc
 
 
+####使用方法
+
+  注意：支持 node 4.x 6.x
+  error:  fis.require.paths is not end with `node_modules`, and it will be skipped.
+
+  >fis3-adc
+  >npm install
+  >fis3 release dev -d .
+
 #### 功能描述
 
 1、可配置
@@ -47,14 +56,12 @@
 > fis.match(selector, props);
 
 
+> 开启将零散资源进行自动打包
+  
+  eg. fis-postpackager-simple
+  fis.config.set('settings.postpackager.simple.autoCombine', true);
 
-#### 插件
 
-```
-npm install -g fis-parser-less
-npm install -g fis3-postpackager-loader
-
-```
 
 #### 基本属性
 
@@ -121,15 +128,7 @@ optimizer：
 
 ```
 fis.match('::package', {
-  postpackager: fis.plugin('loader'
-  //   ,{
-  //   // resourceType: 'mod',
-  //   // obtainScript: false,
-  //   // allInOne: true,
-  //   // useInlineMap: true,
-  //   // useHash: true
-  // }
-  )
+  postpackager: fis.plugin('loader')
 });
 ```
 
@@ -256,3 +255,63 @@ fis.media('debug').match('*.{js,css,png}', {
   optimizer: null
 })
 ```
+
+#### [内嵌插件](http://fis.baidu.com/fis3/docs/api/config-system-plugin.html)
+
+  fis-optimizer-clean-css
+  fis-optimizer-png-compressor
+  fis-optimizer-uglify-js
+  fis-spriter-csssprites
+  fis3-deploy-local-deliver
+  fis3-deploy-http-push
+  fis3-hook-components
+  fis3-packager-map
+
+
+##### 第三方插件
+
+> 支持 es6、es7 或者 jsx 编译成 es5
+
+*[fis-parser-babel-5.x](https://github.com/fex-team/fis-parser-babel-5.x)*
+
+> 支持 typescript、es6 或者 jsx 编译成 js。速度相比 babel 略快，但是 es7 跟进较慢。
+
+*[fis3-parser-typescript](https://github.com/fex-team/fis3-parser-typescript)*
+
+>支持 less 编译成 css
+
+*[fis-parser-less-2.x](https://github.com/fouber/fis-parser-less-2.x)*
+
+>支持 sass/scss 编译成 css
+
+*[fis-parser-node-sass](https://github.com/fex-team/fis-parser-node-sass)*
+
+>一款强大的代码块预处理工具。比如加上如下配置，在 debug 注释中的代码，在正式环境下自动移除。
+
+*[fis-parser-jdists](https://github.com/fex-team/fis-parser-jdists)*
+
+>支持 jade 编译成 html
+
+*[fis-parser-jade](https://github.com/ssddi456/fis-parser-jade)*
+
+>零散资源打包
+
+*[fis-postpackager-simple](https://github.com/hefangshi/fis-postpackager-simple)*
+
+*cnpm install fis3-deploy-offline-pack*http路径变成了本地的文件路径
+
+
+
+#### 其它脚手架
+
+[基于fis3-arrow(fisa)的多业务模块化脚手架](https://github.com/zuojj/fis3-arrow-scaffold)
+
+[基于fis3的PC端纯静态解决方案](https://github.com/fancyboynet/fis3-www-demo)
+
+[]()
+
+[]()
+
+[]()
+
+[]()
