@@ -1,12 +1,12 @@
 var fs = require('fs');
 var minify = require('html-minifier').minify;
-
+var config = require('./config.json');
 
 //path模块，可以生产相对和绝对路径
 var path = require("path");
 
 //配置远程路径
-var remotePath = __dirname+"/public/invite_reg";
+var remotePath = path.join(__dirname,"public",config.name);
 
 //获取后缀名
 function getdir(url){

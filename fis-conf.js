@@ -1,10 +1,14 @@
+var config = require('./config.json');
+fis.set('pro_name', config.name);
+
+
 fis.set('t_version', new Date().getTime());
 fis.set('dev_path', 'dev');
 fis.set('public_path', 'public');
 fis.set('common', 'common');
 
 
-fis.set('pro_name', 'invite_reg');
+
 
 
 var fs = require('fs');
@@ -30,6 +34,15 @@ function deleteFolder(path) {
 };
 
 deleteFolder(rootFile);
+
+
+fis.match('*.less', {
+  // fis-parser-less 插件进行解析
+  parser: fis.plugin('less'),
+  // .less 文件后缀构建后被改成 .css 文件
+  rExt: '.css'
+})
+
 
 // 禁止多项目 
 fis.match('${public_path}/**.html', {
@@ -108,7 +121,7 @@ fis.media('dev')
 
 .match('${dev_path}/${pro_name}/(**.html)', {
   release: '${public_path}/${pro_name}/$1',
-  // optimizer: fis.plugin('html-minifier')
+  useMap :true
 })
 
 .match('${dev_path}/${pro_name}/(**.css)', {
@@ -123,13 +136,13 @@ fis.media('dev')
 
 // 压缩 html 内联的 js
 .match('${dev_path}/${pro_name}/**.html:js', {
-  // isMode:true,
+  useMap :true,
   optimizer: fis.plugin('uglify-js'),
 })
 
 // 压缩 html 内联的 css
 .match('${dev_path}/${pro_name}/**.html:css', {
-  // isMode:true,
+  useMap :true,
   optimizer: fis.plugin('clean-css'),
 })
 .match('**', {
