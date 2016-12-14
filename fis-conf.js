@@ -1,138 +1,154 @@
-// default settings. fis3 release
-var DEFAULT_SETTINGS = {
-  project: {
-    charset: 'utf8',
-    md5Length: 7,
-    md5Connector: '_',
-    files: ['**'],
-    ignore: ['node_modules/**', 'output/**', '.git/**', 'fis-conf.js','dist/**']
-  },
+fis.set('t_version', new Date().getTime());
+fis.set('dev_path', 'dev');
+fis.set('public_path', 'public');
+fis.set('common', 'common');
 
-  component: {
-    skipRoadmapCheck: true,
-    protocol: 'github',
-    author: 'fis-components'
-  },
 
-  modules: {
-    hook: 'components',
-    packager: 'map'
-  },
+fis.set('pro_name', 'invite_reg');
 
-  options: {}
+
+var fs = require('fs');
+
+var rootFile = fis.get('public_path')+'/'+fis.get('pro_name');
+function deleteFolder(path) {
+    var files = [];
+    if( fs.existsSync(path) ) {
+        files = fs.readdirSync(path);
+        files.forEach(function(file,index){
+            var curPath = path + "/" + file;
+            if(fs.statSync(curPath).isDirectory()) { // recurse
+                deleteFolder(curPath);
+                console.log('del dir '+curPath+' success');
+            } else { // delete file
+                fs.unlinkSync(curPath);
+
+                console.log("del file "+curPath+'/'+file+" success");
+            }
+        });
+        fs.rmdirSync(path);
+    }
 };
 
+deleteFolder(rootFile);
 
-var config = require('./dev/config');
+// 禁止多项目 
+fis.match('${public_path}/**.html', {
+  release: false
+})
 
+fis.match('${public_path}/${common}/**', {
+  release: true
+})
 
-// console.log(config);
-
-// return;
-
-
-fis.set('t_version', config.version);
-fis.set('dev_path', '/dev');
-fis.set('dist_path', '/dist');
-fis.set('pro_name', config.name);
-
-// 开启相对地址
-// npm install [-g] fis3-hook-relative 
-fis.hook('relative'); 
-fis.match('**', { relative: true })
-
-// Global start
-//合并打包需加
-fis.match('::package', {
-  postpackager: fis.plugin('loader',{
-    // resourceType: 'mod',
-    obtainScript: true, //是否收集 <script> 内容
-    obtainStyle: true, // 是否收集 <style> 和 <link>内容
-    allInOne: {// 默认 false, 配置是否合并零碎资源
-
-      // '${dist_path}/${pro_name}/css/all.css'
-
-      js: function(file) {
-        return 'dist/'+config.name+'/js/all.js';
-      },
-      css: function(file) {
-        return 'dist/'+config.name+'/css/all.css';
-      }
-    }, 
-    // useInlineMap: true,
-    // useHash: true
-  })
-});
-
-
-fis.match('${dev_path}/images/(**)', {
-  release:'${dist_path}/images/$1',
-  useHash: true
-});
-
-fis.match('${dev_path}/html/${pro_name}/(**)', {
-  //invoke fis-optimizer-html-minifier  
-  release:'${dist_path}/${pro_name}/$1',
-  optimizer: fis.plugin('html-minifier'),
-  useHash: true
-});
-
-// 压缩 index.html 内联的 js
-fis.match('${dev_path}/html/${pro_name}/(**):js', {
-  optimizer: fis.plugin('uglify-js')
-});
-
-// 压缩 index.html 内联的 css
-fis.match('${dev_path}/html/${pro_name}/(**):css', {
-  optimizer: fis.plugin('clean-css')
-});
-
-
-fis.match('${dev_path}/css/common/libs/{**/(*.css),(*.css)}', {
-  release:'${dist_path}/css/common/$1'
-});
-
-// fis.match('${dev_path}/css/{common/*.css,${pro_name}/*.css}', {
-//   // release:true,
-//   // useHash: true,
-//   // packTo: '${dist_path}/${pro_name}/css/all.css',
-//   optimizer: fis.plugin('clean-css') // js 压缩
-// });
-fis.match('${dist_path}/${pro_name}/css/all.css', {
-  // release:'${dist_path}/${pro_name}/css/all.css',
-  optimizer: fis.plugin('clean-css') // js 压缩
-});
-
-fis.match('${dev_path}/js/common/libs/{**/(*.js),(*.js)}', {
-  release:'${dist_path}/js/common/$1',
-});
-
-// fis.match('${dev_path}/js/common/*.js', {
-//   // release:true,
-//   // useHash: true,
-//   // packTo: '${dist_path}/${pro_name}/js/all.js',
-//   optimizer: fis.plugin('uglify-js') // js 压缩
-// });
-fis.match('${dist_path}/${pro_name}/js/all.js', {
-  optimizer: fis.plugin('uglify-js') // js 压缩
-});
-
+fis.match('${public_path}/${public_path}/**', {
+  release: true
+})
 
 // Global end
 
 // default media is `dev`
 fis.media('dev')
+.hook('relative')
+.match('**', { relative: true })
+.match('::package', {
+  // packager: fis.plugin('map'),
+  // prepackager: fis.plugin('plugin-name'),
 
-  .match('${dev_path}/(**)', {
-  	
-    useHash: false,
-    userMap: false,
-    optimizer: null
+  postpackager: fis.plugin('loader',{
+    // resourceType: 'mod',
+    // obtainScript: true, //是否收集 <script> 内容
+    // obtainStyle: true, // 是否收集 <style> 和 <link>内容
+    // useInlineMap: true,
+    allInOne:  {// 默认 false, 配置是否合并零碎资源
+
+      'js': function(file) {
+        // console.log(file);
+        return fis.get('public_path')+'/'+fis.get('pro_name')+'/js/all.js';
+      },
+      'css': function(file) {
+        // console.log(file);
+        return fis.get('public_path')+'/'+fis.get('pro_name')+'/css/all.css';
+      },
+      includeAsyncs: true
+      // sourceMap: true
+    }, 
+    useInlineMap: false,
+    useHash: true
   })
-  .match('*.{js,css,png,jpeg,jpg,gif}', {
-      query: '?${t_version}',
-  });
+})
+
+// 项目设限
+.match('${dev_path}/**', {
+  release: false
+})
+
+// common 第三方js/css插件 指定拷贝目录
+.match('${dev_path}/${common}/(**.js)', {
+  release: '${public_path}/common/$1',
+  optimizer: fis.plugin('uglify-js')
+})
+
+.match('${dev_path}/${common}/(**.css)', {
+  release: '${public_path}/common/$1',
+  optimizer: fis.plugin('clean-css')
+})
+
+
+// 指定项目可操作
+.match('${dev_path}/${pro_name}/**', {
+  release: true
+})
+
+// 指定项目 图片通行
+.match('${dev_path}/${pro_name}/(**.{png,jpeg,jpg,gif})', {
+  release: '${public_path}/${pro_name}/$1',
+  useMap: true
+})
+
+
+.match('${dev_path}/${pro_name}/(**.html)', {
+  release: '${public_path}/${pro_name}/$1',
+  // optimizer: fis.plugin('html-minifier')
+})
+
+.match('${dev_path}/${pro_name}/(**.css)', {
+  release: '${public_path}/${pro_name}/css/all.css',
+  optimizer: fis.plugin('clean-css')
+})
+
+.match('${dev_path}/${pro_name}/(**.js)', {
+  release: '${public_path}/${pro_name}/js/all.js',
+  optimizer: fis.plugin('uglify-js')
+})
+
+// 压缩 html 内联的 js
+.match('${dev_path}/${pro_name}/**.html:js', {
+  // isMode:true,
+  optimizer: fis.plugin('uglify-js'),
+})
+
+// 压缩 html 内联的 css
+.match('${dev_path}/${pro_name}/**.html:css', {
+  // isMode:true,
+  optimizer: fis.plugin('clean-css'),
+})
+.match('**', {
+  
+  useHash: false,
+  userMap: false,
+  // optimizer: null
+})
+.match('*.{js,css,png,jpeg,jpg,gif}', {
+    query: '?v=${t_version}',
+});
+
 
 
 // extends GLOBAL config
 fis.media('production')
+.hook('relative')
+.match('**', { relative: true })
+.match('${public_path}/${pro_name}/(**.html)', {
+  // release: '${public_path}/${pro_name}/$1',
+  optimizer: fis.plugin('html-minifier')
+})
