@@ -1,0 +1,30 @@
+{
+  "name": "for-h5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "installlib": "npm install fis3 -g && npm install -g fis3-hook-relative && npm install -g fis3-postpackager-loader && npm install  && npm install -g fis-optimizer-html-minifier",
+    "start": "fis server start && fis3 release -wL",
+    "stop": "fis server stop",
+    "dev": "fis3 release dev -d ./",
+    "public": "npm run dev && gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "huangzhengjie",
+  "license": "ISC",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-notify": "^2.2.0",
+    "gulp-uglify": "^2.0.0"
+  },
+  "dependencies": {
+    "fis-optimizer-html-minifier": "0.0.9",
+    "fis3-hook-relative": "^1.0.9",
+    "fis3-postpackager-loader": "^2.1.4"
+  }
+}
