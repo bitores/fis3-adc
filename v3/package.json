@@ -1,0 +1,37 @@
+{
+  "name": "h5-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-cheerio": "^0.6.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-dom-src": "^0.2.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-inject": "^4.2.0",
+    "gulp-inline-source": "^3.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-notify": "^2.2.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.0",
+    "modify-filename": "^1.1.0",
+    "object-assign": "^4.0.1",
+    "rev-hash": "^1.0.0",
+    "run-sequence": "^1.2.2",
+    "sort-keys": "^1.0.0",
+    "through2": "^2.0.0",
+    "underscore": "^1.6.0",
+    "vinyl-file": "^1.1.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "object-assign": "^4.1.0"
+  }
+}
